@@ -1,16 +1,14 @@
 {
-  "name": "uns_people",
+  "name": "uns-people",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Anonymous chat website",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "build": "npm install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2",
-    "socket.io": "^4.8.1"
-  },
-  "description": ""
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
 }
