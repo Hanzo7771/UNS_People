@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNS People</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>UNS People</h1>
+        <div id="chat-window"></div>
+        <input type="text" id="username" placeholder="Enter your name">
+        <input type="text" id="message" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        let username = "";
+
+        // Function to send a message
+        function sendMessage() {
+            const usernameInput = document.getElementById("username");
+            const messageInput = document.getElementById("message");
+
+            if (usernameInput.value.trim() === "") {
+                alert("Please enter your name first.");
+                return;
+            }
+
+            if (messageInput.value.trim() === "") {
+                alert("Please enter a message.");
+                return;
+            }
+
+            // Set the username if not already set
+            if (username === "") {
+                username = usernameInput.value;
+            }
+
+            // Send the message to the server
+            const message = `${username}: ${messageInput.value}`;
+            socket.emit("chat message", message);
+
+            // Clear the message input
+            messageInput.value = "";
+        }
+
+        // Listen for incoming messages
+        socket.on("chat message", (msg) => {
+            const chatWindow = document.getElementById("chat-window");
+            chatWindow.innerHTML += `<div class="message">${msg}</div>`;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        });
+    </script>
+</body>
+</html>
