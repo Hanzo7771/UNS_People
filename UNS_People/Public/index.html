@@ -15,8 +15,12 @@
         <button onclick="sendMessage()">Send</button>
     </div>
 
+    <!-- Include Socket.IO client library -->
     <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Include your custom JavaScript -->
     <script>
+        // Connect to the server using Socket.IO
         const socket = io();
 
         let username = "";
@@ -26,11 +30,13 @@
             const usernameInput = document.getElementById("username");
             const messageInput = document.getElementById("message");
 
+            // Check if the username is entered
             if (usernameInput.value.trim() === "") {
                 alert("Please enter your name first.");
                 return;
             }
 
+            // Check if the message is empty
             if (messageInput.value.trim() === "") {
                 alert("Please enter a message.");
                 return;
@@ -49,10 +55,12 @@
             messageInput.value = "";
         }
 
-        // Listen for incoming messages
+        // Listen for incoming messages from the server
         socket.on("chat message", (msg) => {
             const chatWindow = document.getElementById("chat-window");
             chatWindow.innerHTML += `<div class="message">${msg}</div>`;
+
+            // Scroll to the bottom of the chat window
             chatWindow.scrollTop = chatWindow.scrollHeight;
         });
     </script>
