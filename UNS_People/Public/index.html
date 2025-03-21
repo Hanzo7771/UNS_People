@@ -20,47 +20,37 @@
 
     <!-- Include your custom JavaScript -->
     <script>
-        // Connect to the server using Socket.IO
         const socket = io();
 
         let username = "";
 
-        // Function to send a message
         function sendMessage() {
             const usernameInput = document.getElementById("username");
             const messageInput = document.getElementById("message");
 
-            // Check if the username is entered
             if (usernameInput.value.trim() === "") {
                 alert("Please enter your name first.");
                 return;
             }
 
-            // Check if the message is empty
             if (messageInput.value.trim() === "") {
                 alert("Please enter a message.");
                 return;
             }
 
-            // Set the username if not already set
             if (username === "") {
                 username = usernameInput.value;
             }
 
-            // Send the message to the server
             const message = `${username}: ${messageInput.value}`;
             socket.emit("chat message", message);
 
-            // Clear the message input
             messageInput.value = "";
         }
 
-        // Listen for incoming messages from the server
         socket.on("chat message", (msg) => {
             const chatWindow = document.getElementById("chat-window");
             chatWindow.innerHTML += `<div class="message">${msg}</div>`;
-
-            // Scroll to the bottom of the chat window
             chatWindow.scrollTop = chatWindow.scrollHeight;
         });
     </script>
